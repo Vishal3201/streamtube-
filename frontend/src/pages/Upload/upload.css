@@ -1,0 +1,19 @@
+.upload{
+padding:40px;
+display:flex;
+flex-direction:column;
+gap:15px;
+width:400px;
+}
+
+.upload input{
+padding:10px;
+}
+
+.upload button{
+padding:10px;
+background:red;
+color:white;
+border:none;
+cursor:pointer;
+}

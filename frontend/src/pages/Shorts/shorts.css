@@ -1,0 +1,71 @@
+.shorts-page{
+height:100vh;
+overflow-y:scroll;
+scroll-snap-type:y mandatory;
+background:black;
+}
+
+/* Hide scrollbar */
+.shorts-page::-webkit-scrollbar{
+display:none;
+}
+
+.short-video{
+height:100vh;
+position:relative;
+scroll-snap-align:start;
+}
+
+.short-player{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* TEXT OVERLAY */
+.short-info{
+position:absolute;
+bottom:20px;
+left:10px;
+color:white;
+font-size:16px;
+font-weight:500;
+}
+
+/* OPTIONAL: RIGHT SIDE ACTIONS (future ready) */
+.short-actions{
+position:absolute;
+right:10px;
+bottom:80px;
+color:white;
+display:flex;
+flex-direction:column;
+gap:20px;
+font-size:20px;
+}
+/* FULL PAGE FIX */
+.shorts-page{
+height:100dvh;              /* ✅ FIX FOR MOBILE */
+overflow-y:auto;
+scroll-snap-type:y mandatory;
+-webkit-overflow-scrolling:touch;
+}
+
+/* EACH SHORT */
+.short-full{
+height:100dvh;              /* ✅ IMPORTANT */
+display:flex;
+justify-content:center;
+align-items:center;
+scroll-snap-align:start;
+background:black;
+position:relative;
+}
+
+/* VIDEO */
+.short-video{
+height:100%;
+width:100%;
+object-fit:cover;          /* ✅ FULL SCREEN LIKE YOUTUBE */
+}
+

@@ -1,0 +1,14 @@
+.short-card{
+width:180px;
+cursor:pointer;
+}
+
+.short-card img{
+width:100%;
+border-radius:10px;
+}
+
+.short-card p{
+font-size:14px;
+margin-top:5px;
+}

@@ -1,0 +1,85 @@
+.create-page{
+height:100vh;
+width:100%;
+background:black;
+position:relative;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+/* TOP BAR */
+
+.create-topbar{
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+color:white;
+z-index:10;
+}
+
+.create-topbar button{
+background:none;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+/* CAMERA */
+
+.camera{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* CONTROLS */
+
+.controls{
+position:absolute;
+bottom:40px;
+left:0;
+right:0;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:45px;
+}
+
+/* ICON BUTTON */
+
+.icon-btn{
+background:rgba(0,0,0,0.5);
+border:none;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+cursor:pointer;
+}
+
+/* RECORD BUTTON */
+
+.record-btn{
+width:75px;
+height:75px;
+border-radius:50%;
+border:5px solid white;
+background:red;
+cursor:pointer;
+}
+
+/* RECORDING EFFECT */
+
+.record-btn.recording{
+box-shadow:0 0 20px red;
+}

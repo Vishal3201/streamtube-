@@ -1,0 +1,72 @@
+.you-page{
+padding:20px;
+font-family:Arial, sans-serif;
+}
+
+/* profile */
+
+.profile-section{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.profile-img{
+width:70px;
+height:70px;
+border-radius:50%;
+}
+
+.profile-info h2{
+margin:0;
+font-size:18px;
+}
+
+.profile-info p{
+margin:3px 0;
+font-size:14px;
+color:#606060;
+}
+
+.subs{
+font-size:13px;
+color:#909090;
+}
+
+/* buttons */
+
+.channel-actions{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+}
+
+.channel-actions button{
+flex:1;
+padding:8px;
+border:none;
+border-radius:20px;
+background:#f2f2f2;
+cursor:pointer;
+}
+
+/* menu */
+
+.menu-list{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.menu-item{
+padding:12px;
+border-radius:10px;
+background:#f7f7f7;
+cursor:pointer;
+transition:0.2s;
+}
+
+.menu-item:hover{
+background:#ececec;
+}

@@ -1,0 +1,16 @@
+.channel{
+padding:20px;
+}
+
+.channel-header{
+display:flex;
+gap:15px;
+align-items:center;
+margin-bottom:30px;
+}
+
+.channel-videos{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+gap:20px;
+}

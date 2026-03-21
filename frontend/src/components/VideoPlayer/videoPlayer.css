@@ -1,0 +1,6 @@
+.player-container{
+width:100%;
+background:black;
+border-radius:10px;
+overflow:hidden;
+}

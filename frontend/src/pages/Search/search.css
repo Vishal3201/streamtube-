@@ -1,0 +1,52 @@
+.search-page{
+background:white;
+min-height:100vh;
+}
+
+.search-header{
+display:flex;
+align-items:center;
+gap:10px;
+padding:15px 25px;
+background:#0f2a44;
+color:white;
+}
+
+.back-btn{
+background:none;
+border:none;
+font-size:20px;
+color:white;
+cursor:pointer;
+}
+
+.search-input-page{
+flex:1;
+height:40px;
+border-radius:20px;
+border:none;
+padding:0 15px;
+font-size:15px;
+}
+
+.mic-btn{
+width:40px;
+height:40px;
+border-radius:50%;
+border:none;
+background:white;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.suggestions{
+padding:20px 25px;
+}
+
+.suggestion-item{
+padding:12px 0;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}

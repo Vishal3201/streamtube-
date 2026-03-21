@@ -1,0 +1,15 @@
+.comments{
+margin-top:20px;
+}
+
+.comments input{
+width:70%;
+padding:8px;
+margin-right:10px;
+}
+
+.comment{
+margin-top:10px;
+border-bottom:1px solid #eee;
+padding-bottom:5px;
+}
