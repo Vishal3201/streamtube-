@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create axios instance
 const API = axios.create({
-  baseURL: "https://streamtube-backend.onrender.com/api",
+  baseURL: "https://streamtube-5r3c.onrender.com/api",
   withCredentials: true,
 });
 
