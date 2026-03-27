@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:5000/api";
+export const API_URL = "https://streamtube-5r3c.onrender.com/api";
 
 export const VIDEO_QUALITIES = [
   "240p",

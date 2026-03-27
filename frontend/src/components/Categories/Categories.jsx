@@ -1,4 +1,4 @@
-import "./categories.css";
+import "./Categories.css";
 import { useState } from "react";
 
 function Categories(){
