@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+import fileUpload from "express-fileupload";
 import videoRoutes from "./routes/videoRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
@@ -16,7 +16,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://your-frontend.vercel.app" // 🔥 replace with your Vercel URL
+    "https://your-frontend.vercel.app/" // 🔥 replace with your Vercel URL
   ],
   credentials: true
 }));
@@ -46,6 +46,10 @@ app.get("/", (req, res) => {
 app.use("/api/videos", videoRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/comments", commentRoutes);
+
+app.use(fileUpload({
+  useTempFiles: true,
+}));
 
 // ✅ Start server (important for Render)
 const PORT = process.env.PORT || 5000;
