@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import fileUpload from "express-fileupload";
+
 import videoRoutes from "./routes/videoRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
@@ -12,20 +13,21 @@ dotenv.config();
 
 const app = express();
 
-// ✅ CORS (allow local + deployed frontend)
+// ✅ FIXED CORS (important for Vercel + local)
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend.vercel.app/" // 🔥 replace with your Vercel URL
-  ],
+  origin: true,
   credentials: true
 }));
 
 // ✅ Middleware
 app.use(express.json());
 
-// ❌ REMOVE THIS if using Cloudinary (not needed anymore)
-// app.use("/uploads", express.static("uploads"));
+// ✅ 🔥 IMPORTANT: fileUpload MUST come BEFORE routes
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: "/tmp/",
+  limits: { fileSize: 100 * 1024 * 1024 }, // 100MB
+}));
 
 // Optional static
 app.use(express.static("public"));
@@ -47,13 +49,9 @@ app.use("/api/videos", videoRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/comments", commentRoutes);
 
-app.use(fileUpload({
-  useTempFiles: true,
-}));
-
-// ✅ Start server (important for Render)
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:5000`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
