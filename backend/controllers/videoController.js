@@ -1,55 +1,38 @@
-// Temporary in-memory storage
-let videos = [];
+import cloudinary from "../config/cloudinary.js";
+import Video from "../models/Video.js";
 
-/**
- * ✅ Get All Videos
- */
-export const getVideos = (req, res) => {
-  res.json(videos);
-};
-
-/**
- * ✅ Get Single Video by ID
- */
-export const getVideoById = (req, res) => {
-  const video = videos.find(v => v._id === req.params.id);
-
-  if (!video) {
-    return res.status(404).json({ message: "Video not found" });
-  }
-
-  res.json(video);
-};
-
-/**
- * ✅ Upload Video
- */
-export const uploadVideo = (req, res) => {
+export const uploadVideo = async (req, res) => {
   try {
-    // ❗ check file
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
+    const { title, description } = req.body;
+
+    // upload video
+    const videoUpload = await cloudinary.uploader.upload(req.files.video.tempFilePath, {
+      resource_type: "video",
+    });
+
+    // upload thumbnail (optional)
+    let thumbnailUrl = "";
+    if (req.files.thumbnail) {
+      const thumbUpload = await cloudinary.uploader.upload(req.files.thumbnail.tempFilePath);
+      thumbnailUrl = thumbUpload.secure_url;
     }
 
-    // ❗ check title
-    if (!req.body.title) {
-      return res.status(400).json({ message: "Title is required" });
-    }
+    const newVideo = await Video.create({
+      title,
+      description,
+      videoUrl: videoUpload.secure_url,
+      thumbnailUrl,
+    });
 
-    const video = {
-      _id: Date.now().toString(),
-      title: req.body.title,
-      url: `http://localhost:5000/uploads/${req.file.filename}`,
-      views: 0,
-      createdAt: new Date(),
-    };
-
-    videos.push(video);
-
-    res.status(201).json(video);
-
+    res.json(newVideo);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Upload failed" });
+    res.status(500).json({ error: "Upload failed" });
   }
+};
+
+// GET ALL VIDEOS
+export const getVideos = async (req, res) => {
+  const videos = await Video.find().sort({ createdAt: -1 });
+  res.json(videos);
 };
