@@ -1,19 +1,28 @@
 import axios from "axios";
 
-// Create axios instance
+/* =========================
+   BASE URL
+========================= */
+const BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://streamtube-5r3c.onrender.com";
+
+/* =========================
+   AXIOS INSTANCE
+========================= */
 const API = axios.create({
-  baseURL: "https://streamtube-5r3c.onrender.com/api",
+  baseURL: `${BASE_URL}/api`,
   withCredentials: true,
 });
 
-// Attach token automatically (for future auth)
+/* =========================
+   AUTH INTERCEPTOR
+========================= */
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
-
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
-
   return req;
 });
 
@@ -35,25 +44,24 @@ export const getVideo = async (id) => {
 
 // Upload video
 export const uploadVideo = async (formData) => {
-  const res = await API.post("/videos", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  return res.data;
+  try {
+    const res = await API.post("/videos/upload", formData);
+    return res.data;
+  } catch (err) {
+    console.error("Upload Error:", err.response?.data || err.message);
+    throw err;
+  }
 };
 
 /* =========================
    COMMENT APIs
 ========================= */
 
-// Add comment
 export const addComment = async (data) => {
   const res = await API.post("/comments", data);
   return res.data;
 };
 
-// Get comments by video
 export const getComments = async (videoId) => {
   const res = await API.get(`/comments/${videoId}`);
   return res.data;
@@ -63,11 +71,9 @@ export const getComments = async (videoId) => {
    AUTH APIs
 ========================= */
 
-// Login
 export const loginUser = async (data) => {
   const res = await API.post("/auth/login", data);
 
-  // Save token (important)
   if (res.data.token) {
     localStorage.setItem("token", res.data.token);
   }
@@ -75,7 +81,6 @@ export const loginUser = async (data) => {
   return res.data;
 };
 
-// Logout
 export const logoutUser = () => {
   localStorage.removeItem("token");
 };
