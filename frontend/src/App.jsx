@@ -18,60 +18,49 @@ import UserPage from "./pages/user/UserPage";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 
-
 function Layout() {
+  const location = useLocation();
 
-const location = useLocation();
+  const hideLayout = location.pathname === "/search"; // hide navbar for search page
 
-const hideLayout = location.pathname === "/search";   // hide navbar for search page
+  return (
+    <>
+      {!hideLayout && <Navbar />}
+      {!hideLayout && <Sidebar />}
 
-return (
+      <div className="page-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/watch" element={<Watch />} />
+          <Route path="/watch/:id" element={<Watch />} />
 
-<>
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/channel" element={<Channel />} />
+          <Route path="/shorts" element={<Shorts />} />
+          <Route path="/shorts/:index" element={<Shorts />} />
 
-{!hideLayout && <Navbar />}
-{!hideLayout && <Sidebar />}
+          <Route path="/search" element={<Search />} />
+          <Route path="/voice" element={<VoiceTest />} />
 
-<div className="page-content">
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-<Routes>
-
-<Route path="/" element={<Home />} />
-<Route path="/watch" element={<Watch />} />
-<Route path="/watch/:id" element={<Watch />} />
-<Route path="/upload" element={<Upload />} />
-<Route path="/channel" element={<Channel />} />
-<Route path="/shorts" element={<Shorts />} />
-
-<Route path="/search" element={<Search />} />
-<Route path="/voice" element={<VoiceTest/>}/>
-
-<Route path="/login" element={<Login />} />
-<Route path="/register" element={<Register />} />
-  <Route path="/user" element={<UserPage />} />
-  <Route path="/You" element={<You />} />
-  <Route path="/Subscriptions" element={<Subscriptions />} />
-   <Route path="/Create" element={<Create />} />
-   <Route path="/shorts/:index" element={<Shorts />} />
-  
-
-</Routes>
-
-</div>
-
-</>
-
-);
-
+          <Route path="/user" element={<UserPage />} />
+          <Route path="/you" element={<You />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/create" element={<Create />} />
+        </Routes>
+      </div>
+    </>
+  );
 }
 
-
 function App() {
-return (
-<BrowserRouter>
-<Layout/>
-</BrowserRouter>
-);
+  return (
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  );
 }
 
 export default App;
