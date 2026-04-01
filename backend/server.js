@@ -3,21 +3,20 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import fileUpload from "express-fileupload";
-
 import videoRoutes from "./routes/videoRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 
-// Load env
+// 🔥 Load env variables FIRST
 dotenv.config();
 
 const app = express();
 
-// ✅ CORS (fixed)
+// ✅ CORS (allow local + deployed frontend)
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://streamtube-t10.vercel.app"
+    "https://streamtube-t10.vercel.app/" // 🔥 replace with your Vercel URL
   ],
   credentials: true
 }));
@@ -25,34 +24,36 @@ app.use(cors({
 // ✅ Middleware
 app.use(express.json());
 
-// ✅ File upload (IMPORTANT - before routes)
-app.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: "/tmp/",
-  limits: { fileSize: 100 * 1024 * 1024 }
-}));
+// ❌ REMOVE THIS if using Cloudinary (not needed anymore)
+// app.use("/uploads", express.static("uploads"));
 
-// Static
+// Optional static
 app.use(express.static("public"));
 
-// ✅ MongoDB
-mongoose.connect(process.env.MONGO_URL)
+// ✅ Connect MongoDB
+mongoose.connect(process.env.MONGO_URL, {
+  serverSelectionTimeoutMS: 5000
+})
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log("❌ DB Error:", err));
 
-// Root route
+// ✅ Root route
 app.get("/", (req, res) => {
   res.send("🚀 StreamTube Backend Running");
 });
 
-// Routes
+// ✅ API Routes
 app.use("/api/videos", videoRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/comments", commentRoutes);
 
-// Start server
+app.use(fileUpload({
+  useTempFiles: true,
+}));
+
+// ✅ Start server (important for Render)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on ${PORT}`);
+  console.log(`🚀 Server running on http://localhost:5000`);
 });
