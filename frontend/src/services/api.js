@@ -42,10 +42,14 @@ export const getVideo = async (id) => {
   return res.data;
 };
 
-// Upload video
+// 🔥 FIXED: Upload video
 export const uploadVideo = async (formData) => {
   try {
-    const res = await API.post("/videos/upload", formData);
+    const res = await API.post("/videos/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res.data;
   } catch (err) {
     console.error("Upload Error:", err.response?.data || err.message);
