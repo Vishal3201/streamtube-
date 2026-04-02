@@ -12,53 +12,70 @@ function Upload() {
   const [thumbnail, setThumbnail] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  /* ✅ Get video from previous page */
   useEffect(() => {
     if (location.state?.file) {
       setFile(location.state.file);
     }
   }, [location.state]);
 
+  /* ✅ Upload handler */
   const handleUpload = async () => {
     if (!file || !title) {
       return alert("Please add a title and select a video");
     }
 
-    const formData = new FormData();
-    formData.append("video", file);
-    formData.append("title", title);
-    formData.append("description", desc);
-
-    if (thumbnail) {
-      formData.append("thumbnail", thumbnail);
-    }
-
     try {
       setLoading(true);
+
+      const formData = new FormData();
+      formData.append("video", file);
+      formData.append("title", title);
+      formData.append("description", desc);
+
+      if (thumbnail) {
+        formData.append("thumbnail", thumbnail);
+      }
+
+      console.log("Uploading...", formData);
+
       await uploadVideo(formData);
 
       alert("Uploaded Successfully 🚀");
 
-      // reset form
+      // reset
       setFile(null);
       setTitle("");
       setDesc("");
       setThumbnail(null);
 
-      // redirect to home
       navigate("/");
+
     } catch (error) {
-      console.error(error);
-      alert("Upload Failed ❌");
+      console.error("UPLOAD ERROR:", error);
+      alert(
+        error?.response?.data?.error ||
+        "Upload Failed ❌ (Check backend / DB / Cloudinary)"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "500px" }}>
+    <div style={{ padding: "20px", maxWidth: "500px", margin: "auto" }}>
       <h2>Upload Video</h2>
 
-      {/* Video Preview */}
+      {/* ✅ Select video manually if not passed */}
+      {!file && (
+        <input
+          type="file"
+          accept="video/*"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      )}
+
+      {/* ✅ Video Preview */}
       {file && (
         <video
           src={URL.createObjectURL(file)}
@@ -86,7 +103,7 @@ function Upload() {
         style={{ width: "100%", marginBottom: "10px" }}
       />
 
-      {/* Thumbnail Upload */}
+      {/* Thumbnail */}
       <input
         type="file"
         accept="image/*"
@@ -95,7 +112,7 @@ function Upload() {
 
       <br /><br />
 
-      {/* Upload Button */}
+      {/* Button */}
       <button onClick={handleUpload} disabled={loading}>
         {loading ? "Uploading..." : "Upload"}
       </button>
